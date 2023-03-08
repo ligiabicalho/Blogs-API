@@ -7,7 +7,8 @@ module.exports = async (req, res, next) => {
 
     const user = await UserService.getByEmail(email);
     if (!user || user.password !== password) {
-      return res.status(400).json({ message: 'Invalid fields' }); 
+      const error = { status: 400, message: 'Invalid fields' };
+      return next(error);
     }
 
     const payload = { email: req.body.email };
