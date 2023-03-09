@@ -28,7 +28,8 @@ const createUser = async (req, res, next) => {
   try {
     const { displayName, email, password, image } = req.body;
     const { status, message } = await UserService.createUser(displayName, email, password, image);
-    if (status === 400) {
+    console.log('create user consoller: status, message', status, message);
+    if (status === 409) {
       return res.status(status).json({ message });
     }
     const payload = { email };
