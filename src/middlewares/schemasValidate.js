@@ -9,6 +9,14 @@ const isRequired = (req, _res, next) => {
   return next();
 };
 
+const isRequiredCategoryName = (req, _res, next) => {
+  const { error } = Joi.object({
+    name: Joi.string().required(),
+  }).validate(req.body);
+  if (error) return next({ status: 400, message: '"name" is required' });
+  return next();
+};
+
 const validateName = (req, _res, next) => {
   const { error } = Joi.string().min(8).validate(req.body.displayName);
   if (error) { 
@@ -36,4 +44,8 @@ const validatePassword = (req, _res, next) => {
   return next();
 };
 
-module.exports = { isRequired, validateName, validateEmail, validatePassword };
+module.exports = { isRequired, 
+  isRequiredCategoryName, 
+  validateName, 
+  validateEmail, 
+  validatePassword };
