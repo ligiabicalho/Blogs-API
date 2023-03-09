@@ -6,7 +6,7 @@ const getAll = async () => {
 };
 
 const getByName = async (name) => {
-  const category = await Category.findByOne({ where: { name } });
+  const category = await Category.findOne({ where: { name } });
   return category;
 };
 
