@@ -6,6 +6,6 @@ const { isRequiredCategoryName } = require('../middlewares/schemasValidate');
 const router = express.Router();
 
 router.post('/', validateToken, isRequiredCategoryName, categoriesController.createCategory);
-// router.get('/', validateToken, categoriesController);
+router.get('/', validateToken, categoriesController.getAll);
 
 module.exports = router;

@@ -13,12 +13,12 @@ const getAll = async (_req, res, next) => {
 const getById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { status, message } = await UserService.getById(id);
-    if (status === 404) {
-      return res.status(status).json({ message });
+    const { error, message } = await UserService.getById(id);
+    if (error) {
+      return res.status(error).json({ message });
     }
     delete message.dataValues.password; // pode deletar no service, com o att exclude. Qual o mais adequado???
-    return res.status(status).json(message);
+    return res.status(200).json(message);
   } catch (error) {
     return next(error);
   }
@@ -27,15 +27,14 @@ const getById = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const { displayName, email, password, image } = req.body;
-    const { status, message } = await UserService.createUser(displayName, email, password, image);
-    console.log('create user consoller: status, message', status, message);
-    if (status === 409) {
-      return res.status(status).json({ message });
+    const { error, message } = await UserService.createUser(displayName, email, password, image);
+    if (error) {
+      return res.status(error).json({ message });
     }
     const payload = { email };
     const token = generateToken(payload);
 
-    return res.status(status).json({ token });
+    return res.status(201).json({ token });
   } catch (error) {
     return next(error);
   }
