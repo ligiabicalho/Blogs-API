@@ -5,6 +5,11 @@ const getAll = async () => {
   return categories;
 };
 
+const getById = async (id) => {
+  const category = await Category.findByPk(id);
+  return category;
+};
+
 const getByName = async (name) => {
   const category = await Category.findOne({ where: { name } });
   return category;
@@ -19,4 +24,4 @@ const createCategory = async (name) => {
   return { error: null, message: newCategory };
 };
 
-module.exports = { getAll, createCategory };
+module.exports = { getAll, getById, createCategory };
