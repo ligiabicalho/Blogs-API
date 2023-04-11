@@ -24,12 +24,13 @@ const getById = async (req, res, next) => {
 
 const createPost = async (req, res, next) => {
   try {
-    const post = req.body;
-    const { error, message } = await PostService.createPost(post);
+    const { title, content, categoryIds, user } = req.body;
+    console.log('consoller createPost user ', user);
+    const { error, message } = await PostService.createPost(title, content, categoryIds, user.id);
     if (error) {
       return res.status(error).json({ message });
     }
-    return res.status(201).json(post);
+    return res.status(201).json(message);
   } catch (error) {
     return next(error);
   }
